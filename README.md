@@ -5,6 +5,8 @@ master --> AI_group
 master --> README.md
 QG_group --> 1[Week_1]
 1[Week_1] --> LinkedList
+LinkedList --> SingleLinkedList
+LinkedList --> DoubleLinkedList
 AI_group --> 2[Week_1]
 2[Week_1] --> 周记1.md
 ```
