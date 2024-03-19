@@ -35,7 +35,8 @@ Status IsLoop( LinkedList *L );							// 判断链表是否成环
 Status ReverseList( LinkedList *L );					// 逆转单链表
 Node* ReverseList_Recursive( LinkedList *head );		// 递归逆转单链表 
 int test_number( char s[30] );							// 检验输入内容 
-int test_number_list( char s[30], int i );				// 检验输入内容 
+int test_number_list( char s[30], int i );				// 检验输入内容
+int test_number2( char s[30] ); 
 
 // 定义链表结构 
 typedef struct _Dnode {

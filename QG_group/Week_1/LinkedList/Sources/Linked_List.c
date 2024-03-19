@@ -41,9 +41,13 @@ int main(){
 				case 1:
 					q = ( LinkedList )malloc( sizeof( Node ) );
 					printf( "please enter the data of the new node: " );
-					scanf( "%d", &( q -> data ) );
+					scanf( "%s", s );
+					e = test_number2( s );
+					q -> data = e;
 					printf( "please enter the data of node before the position you want to insert the new node: " );
-					scanf( "%d", &e );
+					scanf( "%s", s );
+					e = test_number2( s );
+					
 					Node* p = SearchListNode( &L, e );
 					InsertList( &L, p, q );
 					PrintList( &L );
@@ -132,9 +136,13 @@ int main(){
 				case 1:
 					q = ( DLinkedList )malloc( sizeof( DNode ) );
 					printf( "please enter the data of the new node: " );
-					scanf( "%d", &( q -> data ) );
+					scanf( "%s", s );
+					e = test_number2( s );
+					
+					q -> data = e;
 					printf( "please enter the data of node before the position you want to insert the new node: " );
-					scanf( "%d", &e );
+					scanf( "%s", s );
+					e = test_number2( s );
 					DNode* p = SearchDListNode( &L, e );
 					if (p != NULL) {
 	                    InsertDList(&L, p, q);
@@ -169,7 +177,24 @@ int main(){
 	}
 	return 0;
 } 
-
+int test_number2( char s[30] ){
+	int n, flag;
+	do{
+		flag = 1;
+		if( strcmp( s, "0" ) == 0 ){
+			n = 0;
+			break;
+		}
+		n = atoi( s );
+		if( n == 0 ){
+        	flag = 0;
+        	printf( "\nNot a number! Reenter:\n\n" );
+        	printf( "please enter the data of the new node: " );
+    		scanf( "%s", s ); 
+    	}
+	}while( flag == 0 );
+	return n;
+}
 
 int test_number( char s[30] ){
 	int n, flag;
