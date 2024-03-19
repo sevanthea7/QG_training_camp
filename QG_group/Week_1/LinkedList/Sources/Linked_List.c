@@ -110,7 +110,11 @@ int main(){
 				CreateList_Tail( &L );
 				break;
 		}
+		
+		EType e;
+		DNode *q;
 		do{
+			do{
 			PrintMenuD();
 			if( strcmp( s, "0" ) == 0 ){
 		    	return 0;
@@ -123,11 +127,7 @@ int main(){
 		        printf( "\nNot an option! Retry:\n\n" );
 		    }
 		}while( flag == 0 );
-		PrintMenu();
-		scanf( "%d", &n );
-		EType e;
-		DNode *q;
-		do{
+
 			switch( n ){
 				case 1:
 					q = ( DLinkedList )malloc( sizeof( DNode ) );
@@ -165,8 +165,6 @@ int main(){
 					PrintDList_reverse( &L );
 					break; 
 			}
-			PrintMenu();
-			scanf( "%d", &n );
 		} while(1);
 	}
 	return 0;
