@@ -548,6 +548,8 @@ void PrintDList_reverse( DLinkedList *L ){
 // 头插法创建 
 Status CreateList_Head( DLinkedList * L){
     DLinkedList p, q;
+    int n;
+	char s[30];
     *L = ( DLinkedList )malloc( sizeof( DNode ) );
     p = *L;				// 指针p始终指向头结点 
     p -> next = NULL; 
@@ -556,11 +558,13 @@ Status CreateList_Head( DLinkedList * L){
     while(1){
         q = ( DLinkedList )malloc( sizeof( DNode ) );
         printf( "Please enter the %d element of the List(enter '-1' to stop entering): ", i );
-		scanf( "%d", &( q -> data ) );
-		if( q -> data == -1 ){
-			free( q );			// 释放不需要的节点内存
+		scanf( "%s", s );
+		n = test_number_list( s, i );
+		if( n == -1 ){						// 如果输入 -1，则结束输入并释放新节点的内存空间
+			free( q );
 			break;
 		}
+		q -> data = n;
         q -> next = p -> next; // 将新节点插到链表头部
         if( p -> next != NULL ){
             p -> next -> prev = q; // 原头节点的下一个节点的前一个节点指向新节点
