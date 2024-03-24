@@ -39,8 +39,8 @@ int test_number( char s[30] ){
 }
 
 Status InitLQueue( pQueue *Q ){
-	*Q = (pQueue)malloc(sizeof(Queue));
-	pNode p = ( pNode )malloc( sizeof( Node ) );
+	*Q = (pQueue)malloc(sizeof(Queue));						// 为队列的头结点分配内存空间
+	pNode p = ( pNode )malloc( sizeof( Node ) );			// 初始化队列的头结点和尾结点
 	(*Q) -> front = p;
 	(*Q) -> back = p;
 	(*Q) -> back -> next = NULL;
@@ -52,7 +52,7 @@ Status InLQueue( pQueue Q, EType e ){
 	pNode p = ( pNode )malloc( sizeof( Node ) );
 	p -> data = e;
 	p -> next = NULL;
-	Q -> back -> next = p;
+	Q -> back -> next = p;									// 将新节点插入到队列的尾部
 	Q -> back = p;
 	return OK;
 }
@@ -67,7 +67,7 @@ Status OutLQueue( pQueue Q, EType *e ){
 	*e = p -> data;
 	Q -> front -> next = p -> next;
 	free( p );
-	if( p == Q -> back ){
+	if( p == Q -> back ){									// 如果出队的是最后一个元素，则更新队尾指针
 		Q -> back = Q -> front;
 	} 
 	return OK;
@@ -91,12 +91,12 @@ Status ClearLQueue( pQueue Q ){
 		return ERROR; 
 	}
 	pNode p = Q -> front -> next;
-	while( p ){
+	while( p ){												// 释放队列中的所有节点
 		Q -> front -> next = p -> next;
 		free( p );
 		p = Q -> front -> next;
 	} 
-    Q -> back = Q -> front;
+    Q -> back = Q -> front;									// 更新队尾指针
     return OK;
 	return OK;
 }
