@@ -125,21 +125,26 @@ int main(){
 			}
 		}
 	} else {
-		char f[256] = { 0 };
-	    char postf[512] = { 0 };
-	    printf( "请输入算式：");
-	    scanf( "%s", f );
-	    
-	    if ( transform( f, postf ) ){
-	        printf("后缀表达式：%s\n", postf );
-	    }
-	    
-	    r = calculate( S, postf );
-	    if( r == 1 ){
-	    	int ans;
-		    GetTopElement( S, &ans );
-		    printf( "%s=%d", f, ans );
-		}
+		do{
+			char f[256] = { 0 };
+		    char postf[512] = { 0 };
+		    printf( "请输入算式(输入x停退出程序)：");
+		    scanf( "%s", f );
+		    if( strcmp( f, "x" ) == 0 ){
+		    	break;
+			} 
+
+		    if ( transform( f, postf ) ){
+		        printf("后缀表达式：%s\n", postf );
+		    }
+		    r = calculate( S, postf );
+		    if( r == 1 ){
+		    	int ans;
+			    GetTopElement( S, &ans );
+			    printf( "%s=%d\n", f, ans );
+			}
+		} while( 1 );
+		
 	}
     return 0;
 }
