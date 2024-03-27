@@ -29,9 +29,19 @@ Status calculate( Stack S, char pf[512] ){
 	char num[6];
 	int i = 0;
 	EType e;
+	int ans = 0;
+	if( pf[i] == '0' && strlen( pf ) == 1 ){
+		ans = 0;
+		return OK;
+	}
 	while( pf[i] ){
 		int j = 0;
-		if( is_number( pf[i] ) ){
+		if( is_number( pf[i] ) || ( is_number( pf[i+1] ) && pf[i] == '-' ) ){
+			if( pf[i] == '-' ){
+				num[j] = pf[i];
+				j ++;
+				i ++; 
+			}
 			while( is_number( pf[i] ) ){			// 循环读入连续数字，保证多位数完整入栈 
 				num[j] = pf[i];
 				j ++;
@@ -48,12 +58,12 @@ Status calculate( Stack S, char pf[512] ){
 			int right = e;							// 弹出第一个栈顶元素 
 			PopLStack( S, &e );
 			int left = e;							// 弹出第二个栈顶元素 
-			int ans = operate_cal( left, right, pf[i] );	// 先后进行计算 
+			ans = operate_cal( left, right, pf[i] );	// 先后进行计算 
 			if( ans == 999999 ){
 				printf( "输入的式子不合规范！\n" );
     			return ERROR;
 			}
-   			PushLStack( S, ans );					// 计算结果重新压入栈 
+   			PushLStack( S, ans );					// 计算结果重新压入栈
 		} else if( pf[i] == ' ' ){
 			continue;
 		} else{
@@ -61,6 +71,9 @@ Status calculate( Stack S, char pf[512] ){
 			return ERROR;
 		}
 		i ++;
+		while( pf[i] == ' ' ){
+			i ++;
+		}
 	}
 	if( GetLength( S ) != 1 ){						// 最后剩下的不是一个元素，报错 
         printf( "输入的式子不合规范！\n" );
@@ -78,14 +91,24 @@ Status transform( char f[256], char postf[512] ){
 	int j = 0;
 	InitLStack( &S );
 	for( i = 0; f[i]; i ++ ){
-		if( is_number( f[i] ) ){
-			postf[j ++] = f[i];
-			while (is_number(f[i + 1])) {			// 检查下一个字符是否为数字，循环读入多位数 
-		        i++;
-		        postf[j++] = f[i];
-		    }
-    		postf[j++] = ' ';						 // 数字之后添加空格 
-		} else if ( f[i] == '(' ){
+		int cnt = 0;
+		if( is_number(f[i]) ){
+            postf[j++] = f[i];
+            while (is_number(f[i + 1])) { 
+                i++;
+                cnt ++;
+                if( cnt > 8 ){
+                	printf( "超出计算范围！\n" );
+    				return ERROR;
+				} 
+                postf[j++] = f[i];
+            }
+                postf[j++] = ' ';
+        } else if ( f[i] == '(' ){
+        	if ( f[i+1] == ')' ){
+				printf( "输入的式子不合规范！\n" );
+    			return ERROR;
+			}
 			PushLStack( S, f[i] );
 		} else if ( f[i] == ')' ){
 			PopLStack( S, &e );
@@ -98,10 +121,22 @@ Status transform( char f[256], char postf[512] ){
                 PopLStack( S, &e );
             }	
 		} else if( is_operator( f[i] ) ){
+			if( i == 0 ){
+				postf[j ++] = '0';
+				postf[j++] = ' ';
+			}
+			
 			if( f[i+1] == '0' && f[i] == '/' ){		// 0做除数，报错 
                	printf( "输入的式子不合规范！\n" );
     			return ERROR;
-            }
+            } else if ( is_operator( f[i+1] ) ){
+            	printf( "输入的式子不合规范！\n" );
+    			return ERROR;
+			}
+            if( ( f[i] == '-' || f[i] == '+' ) && f[i+1] == '0' ){
+            	i ++;
+            	continue;
+			}
 			while ( EmptyLStack( S ) ){
 				if( priority( f[i] ) <= priority( S -> top -> data ) ){	// 运算符优先级小时弹出 
 					PopLStack( S, &e );

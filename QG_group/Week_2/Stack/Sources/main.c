@@ -133,15 +133,16 @@ int main(){
 		    if( strcmp( f, "x" ) == 0 ){
 		    	break;
 			} 
-
-		    if ( transform( f, postf ) ){
-		        printf("后缀表达式：%s\n", postf );
-		    }
-		    r = calculate( S, postf );
+			ClearStack( S );
+			r = transform( f, postf );
 		    if( r == 1 ){
-		    	int ans;
-			    GetTopElement( S, &ans );
-			    printf( "%s=%d\n", f, ans );
+		        printf("后缀表达式：%s\n", postf );
+			    r = calculate( S, postf );
+			    if( r == 1 ){
+			    	int ans;
+				    GetTopElement( S, &ans );
+				    printf( "%s=%d\n", f, ans );
+				}
 			}
 		} while( 1 );
 		
