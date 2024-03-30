@@ -5,9 +5,11 @@ master --> AI_group
 master --> README.md
 QG_group --> 1[Week_1]
 QG_group --> 3[Week_2]
+QG_group --> 5[week_3]
 3[Week_2] --> Queue
 3[Week_2] --> Stack
 1[Week_1] --> LinkedList
+5 --> Sort
 AI_group --> 2[Week_1]
 AI_group --> 4[Week_2]
 4[Week_2] --> Boston_Housing
