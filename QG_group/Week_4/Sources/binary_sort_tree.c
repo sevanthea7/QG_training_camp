@@ -64,7 +64,7 @@ pTNode BST_delete( pTNode root, EType e ){
 		return NULL;
 	}
 	pTNode inh;
-	if( root -> left == NULL && root -> right == NULL ){ 				// 只有一个根节点 
+	if( root -> left == NULL && root -> right == NULL ){ 			// 只有一个根节点 
         free( root );
         printf( "\n删除成功！\n\n" );
         return NULL;
